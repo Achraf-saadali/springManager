@@ -1,0 +1,562 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd"
+              name="Facture"
+              pageWidth="595"
+              pageHeight="842"
+              columnWidth="555"
+              leftMargin="20"
+              rightMargin="20"
+              topMargin="20"
+              bottomMargin="20"
+              uuid="a1b2c3d4-e5f6-7890-abcd-ef1234567890">
+
+    <property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+
+    <!-- PARAMÈTRES -->
+    <parameter name="companyName" class="java.lang.String"/>
+    <parameter name="companyAddress" class="java.lang.String"/>
+    <parameter name="companyPhone" class="java.lang.String"/>
+    <parameter name="companyEmail" class="java.lang.String"/>
+    <parameter name="invoiceNumber" class="java.lang.String"/>
+    <parameter name="invoiceDate" class="java.lang.String"/>
+    <parameter name="clientCode" class="java.lang.String"/>
+    <parameter name="invoiceType" class="java.lang.String"/>
+    <parameter name="totalAmount" class="java.lang.Double"/>
+
+    <!-- CHAMPS DE DONNÉES -->
+    <field name="product_id" class="java.lang.Integer"/>
+    <field name="product_name" class="java.lang.String"/>
+    <field name="amount" class="java.lang.Integer"/>
+    <field name="unit_price" class="java.lang.Double"/>
+    <field name="line_total" class="java.lang.Double"/>
+
+    <!-- VARIABLES -->
+    <variable name="TOTAL_SUM" class="java.lang.Double" calculation="Sum">
+        <variableExpression><![CDATA[$F{line_total}]]></variableExpression>
+    </variable>
+    <variable name="ROW_COUNT" class="java.lang.Integer" calculation="Count">
+        <variableExpression><![CDATA[$F{product_id}]]></variableExpression>
+    </variable>
+
+    <!-- 1. BACKGROUND -->
+    <background>
+        <band splitType="Stretch"/>
+    </background>
+
+    <!-- 2. TITLE -->
+    <title>
+        <band height="280" splitType="Stretch">
+            <!-- Barre latérale gauche premium -->
+            <rectangle>
+                <reportElement x="0" y="0" width="12" height="280" backcolor="#1F3A5F" uuid="b1000001-0000-0000-0000-000000000001"/>
+                <graphicElement>
+                    <pen lineWidth="0.0"/>
+                </graphicElement>
+            </rectangle>
+
+            <!-- Header superior avec dégradé -->
+            <rectangle>
+                <reportElement x="12" y="0" width="543" height="70" backcolor="#FFFFFF" uuid="b1000002-0000-0000-0000-000000000002"/>
+                <graphicElement>
+                    <pen lineWidth="0.0"/>
+                </graphicElement>
+            </rectangle>
+
+            <!-- Ligne accent supérieure -->
+            <rectangle>
+                <reportElement x="12" y="0" width="543" height="3" backcolor="#1F3A5F" uuid="b1000003-0000-0000-0000-000000000003"/>
+                <graphicElement>
+                    <pen lineWidth="0.0"/>
+                </graphicElement>
+            </rectangle>
+
+            <!-- Nom de l'entreprise -->
+            <textField>
+                <reportElement x="25" y="15" width="350" height="50" forecolor="#1F3A5F" uuid="b1000004-0000-0000-0000-000000000004"/>
+                <textElement verticalAlignment="Middle">
+                    <font size="36" isBold="true"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$P{companyName}]]></textFieldExpression>
+            </textField>
+
+            <!-- Badge FACTURE premium -->
+            <rectangle>
+                <reportElement x="420" y="15" width="130" height="50" backcolor="#1F3A5F" uuid="b1000005-0000-0000-0000-000000000005"/>
+                <graphicElement>
+                    <pen lineWidth="0.0"/>
+                </graphicElement>
+            </rectangle>
+            <staticText>
+                <reportElement x="420" y="15" width="130" height="50" forecolor="#FFFFFF" uuid="b1000006-0000-0000-0000-000000000006"/>
+                <textElement textAlignment="Center" verticalAlignment="Middle">
+                    <font size="18" isBold="true" isStrikeThrough="false"/>
+                </textElement>
+                <text><![CDATA[FACTURE]]></text>
+            </staticText>
+
+            <!-- Sepadrateur horizontal -->
+            <line>
+                <reportElement x="12" y="70" width="543" height="1" forecolor="#E5E7EB" uuid="b1000007-0000-0000-0000-000000000007"/>
+                <graphicElement>
+                    <pen lineWidth="1.0"/>
+                </graphicElement>
+            </line>
+
+            <!-- BLOC INFO ÉMETTEUR - Gauche -->
+            <rectangle>
+                <reportElement x="12" y="80" width="260" height="140" backcolor="#FFFFFF" uuid="b1000008-0000-0000-0000-000000000008"/>
+                <graphicElement>
+                    <pen lineWidth="1.0" lineColor="#E5E7EB"/>
+                </graphicElement>
+            </rectangle>
+
+            <!-- Titre du bloc avec fond -->
+            <rectangle>
+                <reportElement x="12" y="80" width="260" height="28" backcolor="#F3F4F6" uuid="b1000009-0000-0000-0000-000000000009"/>
+                <graphicElement>
+                    <pen lineWidth="0.0"/>
+                </graphicElement>
+            </rectangle>
+
+            <!-- Accent gauche du titre -->
+            <rectangle>
+                <reportElement x="12" y="80" width="5" height="28" backcolor="#1F3A5F" uuid="b1000010-0000-0000-0000-000000000010"/>
+                <graphicElement>
+                    <pen lineWidth="0.0"/>
+                </graphicElement>
+            </rectangle>
+
+            <staticText>
+                <reportElement x="22" y="80" width="240" height="28" forecolor="#374151" uuid="b1000011-0000-0000-0000-000000000011"/>
+                <textElement verticalAlignment="Middle">
+                    <font size="11" isBold="true"/>
+                </textElement>
+                <text><![CDATA[INFORMATIONS ÉMETTEUR]]></text>
+            </staticText>
+
+            <textField isBlankWhenNull="true">
+                <reportElement x="22" y="115" width="240" height="18" forecolor="#1F3A5F" uuid="b1000012-0000-0000-0000-000000000012"/>
+                <textElement>
+                    <font size="11" isBold="true"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$P{companyName}]]></textFieldExpression>
+            </textField>
+
+            <textField isBlankWhenNull="true">
+                <reportElement x="22" y="135" width="240" height="14" forecolor="#6B7280" uuid="b1000013-0000-0000-0000-000000000013"/>
+                <textElement>
+                    <font size="9"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$P{companyAddress}]]></textFieldExpression>
+            </textField>
+
+            <textField isBlankWhenNull="true">
+                <reportElement x="22" y="151" width="240" height="13" forecolor="#6B7280" uuid="b1000014-0000-0000-0000-000000000014"/>
+                <textElement>
+                    <font size="9"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$P{companyPhone}]]></textFieldExpression>
+            </textField>
+
+            <textField isBlankWhenNull="true">
+                <reportElement x="22" y="165" width="240" height="13" forecolor="#1F7FBD" uuid="b1000015-0000-0000-0000-000000000015"/>
+                <textElement>
+                    <font size="9" isUnderline="false"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$P{companyEmail}]]></textFieldExpression>
+            </textField>
+
+            <!-- BLOC INFO CLIENT - Milieu -->
+            <rectangle>
+                <reportElement x="285" y="80" width="270" height="140" backcolor="#FFFFFF" uuid="b1000016-0000-0000-0000-000000000016"/>
+                <graphicElement>
+                    <pen lineWidth="1.0" lineColor="#E5E7EB"/>
+                </graphicElement>
+            </rectangle>
+
+            <rectangle>
+                <reportElement x="285" y="80" width="270" height="28" backcolor="#F3F4F6" uuid="b1000017-0000-0000-0000-000000000017"/>
+                <graphicElement>
+                    <pen lineWidth="0.0"/>
+                </graphicElement>
+            </rectangle>
+
+            <rectangle>
+                <reportElement x="285" y="80" width="5" height="28" backcolor="#1F3A5F" uuid="b1000018-0000-0000-0000-000000000018"/>
+                <graphicElement>
+                    <pen lineWidth="0.0"/>
+                </graphicElement>
+            </rectangle>
+
+            <staticText>
+                <reportElement x="295" y="80" width="260" height="28" forecolor="#374151" uuid="b1000019-0000-0000-0000-000000000019"/>
+                <textElement verticalAlignment="Middle">
+                    <font size="11" isBold="true"/>
+                </textElement>
+                <text><![CDATA[CLIENT]]></text>
+            </staticText>
+
+            <textField isBlankWhenNull="true">
+                <reportElement x="295" y="115" width="260" height="18" forecolor="#1F3A5F" uuid="b1000020-0000-0000-0000-000000000020"/>
+                <textElement>
+                    <font size="11" isBold="true"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$P{clientCode}]]></textFieldExpression>
+            </textField>
+
+            <staticText>
+                <reportElement x="295" y="136" width="70" height="12" forecolor="#9CA3AF" uuid="b1000021-0000-0000-0000-000000000021"/>
+                <textElement>
+                    <font size="8"/>
+                </textElement>
+                <text><![CDATA[CODE CLIENT]]></text>
+            </staticText>
+
+            <!-- BLOC DÉTAILS FACTURE -->
+            <rectangle>
+                <reportElement x="12" y="230" width="543" height="40" backcolor="#F9FAFB" uuid="b1000022-0000-0000-0000-000000000022"/>
+                <graphicElement>
+                    <pen lineWidth="1.0" lineColor="#E5E7EB"/>
+                </graphicElement>
+            </rectangle>
+
+            <!-- N° Facture -->
+            <staticText>
+                <reportElement x="22" y="235" width="80" height="12" forecolor="#9CA3AF" uuid="b1000023-0000-0000-0000-000000000023"/>
+                <textElement>
+                    <font size="8" isBold="true"/>
+                </textElement>
+                <text><![CDATA[N° FACTURE]]></text>
+            </staticText>
+            <textField isBlankWhenNull="true">
+                <reportElement x="22" y="248" width="120" height="16" forecolor="#1F3A5F" uuid="b1000024-0000-0000-0000-000000000024"/>
+                <textElement>
+                    <font size="11" isBold="true"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$P{invoiceNumber}]]></textFieldExpression>
+            </textField>
+
+            <!-- Date -->
+            <staticText>
+                <reportElement x="175" y="235" width="80" height="12" forecolor="#9CA3AF" uuid="b1000025-0000-0000-0000-000000000025"/>
+                <textElement>
+                    <font size="8" isBold="true"/>
+                </textElement>
+                <text><![CDATA[DATE]]></text>
+            </staticText>
+            <textField isBlankWhenNull="true">
+                <reportElement x="175" y="248" width="120" height="16" forecolor="#1F3A5F" uuid="b1000026-0000-0000-0000-000000000026"/>
+                <textElement>
+                    <font size="11" isBold="true"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$P{invoiceDate}]]></textFieldExpression>
+            </textField>
+
+            <!-- Type -->
+            <staticText>
+                <reportElement x="328" y="235" width="80" height="12" forecolor="#9CA3AF" uuid="b1000027-0000-0000-0000-000000000027"/>
+                <textElement>
+                    <font size="8" isBold="true"/>
+                </textElement>
+                <text><![CDATA[TYPE]]></text>
+            </staticText>
+            <textField isBlankWhenNull="true">
+                <reportElement x="328" y="248" width="120" height="16" forecolor="#1F3A5F" uuid="b1000028-0000-0000-0000-000000000028"/>
+                <textElement>
+                    <font size="11" isBold="true"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$P{invoiceType}]]></textFieldExpression>
+            </textField>
+
+            <!-- Espace vide -->
+            <rectangle>
+                <reportElement x="481" y="235" width="74" height="30" backcolor="#FFFFFF" uuid="b1000029-0000-0000-0000-000000000029"/>
+                <graphicElement>
+                    <pen lineWidth="0.0"/>
+                </graphicElement>
+            </rectangle>
+
+        </band>
+    </title>
+
+    <!-- 3. PAGE HEADER (vide) -->
+    <pageHeader>
+        <band height="20" splitType="Stretch"/>
+    </pageHeader>
+
+    <!-- 4. COLUMN HEADER (En-tête du tableau) -->
+    <columnHeader>
+        <band height="40" splitType="Stretch">
+            <!-- Fond du header -->
+            <rectangle>
+                <reportElement x="0" y="0" width="555" height="40" backcolor="#1F3A5F" uuid="c1000001-0000-0000-0000-000000000001"/>
+                <graphicElement>
+                    <pen lineWidth="0.0"/>
+                </graphicElement>
+            </rectangle>
+
+            <!-- # -->
+            <staticText>
+                <reportElement x="0" y="0" width="40" height="40" forecolor="#FFFFFF" uuid="c1000002-0000-0000-0000-000000000002"/>
+                <textElement textAlignment="Center" verticalAlignment="Middle">
+                    <font size="10" isBold="true"/>
+                </textElement>
+                <text><![CDATA[#]]></text>
+            </staticText>
+
+            <!-- DÉSIGNATION -->
+            <staticText>
+                <reportElement x="40" y="0" width="235" height="40" forecolor="#FFFFFF" uuid="c1000003-0000-0000-0000-000000000003"/>
+                <textElement verticalAlignment="Middle">
+                    <font size="10" isBold="true"/>
+                </textElement>
+                <text><![CDATA[DÉSIGNATION]]></text>
+            </staticText>
+
+            <!-- QTÉ -->
+            <staticText>
+                <reportElement x="275" y="0" width="75" height="40" forecolor="#FFFFFF" uuid="c1000004-0000-0000-0000-000000000004"/>
+                <textElement textAlignment="Center" verticalAlignment="Middle">
+                    <font size="10" isBold="true"/>
+                </textElement>
+                <text><![CDATA[QTÉ]]></text>
+            </staticText>
+
+            <!-- PRIX UNIT. -->
+            <staticText>
+                <reportElement x="350" y="0" width="88" height="40" forecolor="#FFFFFF" uuid="c1000005-0000-0000-0000-000000000005"/>
+                <textElement textAlignment="Right" verticalAlignment="Middle">
+                    <font size="10" isBold="true"/>
+                </textElement>
+                <text><![CDATA[PRIX UNIT.]]></text>
+            </staticText>
+
+            <!-- TOTAL -->
+            <staticText>
+                <reportElement x="438" y="0" width="117" height="40" forecolor="#FFFFFF" uuid="c1000006-0000-0000-0000-000000000006"/>
+                <textElement textAlignment="Right" verticalAlignment="Middle">
+                    <font size="10" isBold="true"/>
+                </textElement>
+                <text><![CDATA[TOTAL]]></text>
+            </staticText>
+        </band>
+    </columnHeader>
+
+    <!-- 5. DETAIL (Lignes du tableau) -->
+    <detail>
+        <band height="35" splitType="Stretch">
+            <!-- Alternance de couleurs subtile -->
+            <rectangle>
+                <reportElement x="0" y="0" width="555" height="35" backcolor="#FFFFFF" uuid="d1000001-0000-0000-0000-000000000001">
+                    <printWhenExpression><![CDATA[$V{REPORT_COUNT} % 2 == 1]]></printWhenExpression>
+                </reportElement>
+                <graphicElement>
+                    <pen lineWidth="0.0"/>
+                </graphicElement>
+            </rectangle>
+
+            <rectangle>
+                <reportElement x="0" y="0" width="555" height="35" backcolor="#F9FAFB" uuid="d1000002-0000-0000-0000-000000000002">
+                    <printWhenExpression><![CDATA[$V{REPORT_COUNT} % 2 == 0]]></printWhenExpression>
+                </reportElement>
+                <graphicElement>
+                    <pen lineWidth="0.0"/>
+                </graphicElement>
+            </rectangle>
+
+            <!-- Bordure inférieure -->
+            <line>
+                <reportElement x="0" y="34" width="555" height="1" forecolor="#E5E7EB" uuid="d1000003-0000-0000-0000-000000000003"/>
+                <graphicElement>
+                    <pen lineWidth="0.5"/>
+                </graphicElement>
+            </line>
+
+            <!-- # Produit -->
+            <textField isBlankWhenNull="true">
+                <reportElement x="0" y="0" width="40" height="35" forecolor="#9CA3AF" uuid="d1000004-0000-0000-0000-000000000004"/>
+                <textElement textAlignment="Center" verticalAlignment="Middle">
+                    <font size="10"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$F{product_id}]]></textFieldExpression>
+            </textField>
+
+            <!-- Nom du produit -->
+            <textField isBlankWhenNull="true">
+                <reportElement x="40" y="8" width="235" height="19" forecolor="#1F3A5F" uuid="d1000005-0000-0000-0000-000000000005"/>
+                <textElement verticalAlignment="Middle">
+                    <font size="10" isBold="false"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$F{product_name}]]></textFieldExpression>
+            </textField>
+
+            <!-- Quantité -->
+            <textField isBlankWhenNull="true">
+                <reportElement x="275" y="0" width="75" height="35" forecolor="#1F3A5F" uuid="d1000006-0000-0000-0000-000000000006"/>
+                <textElement textAlignment="Center" verticalAlignment="Middle">
+                    <font size="10" isBold="true"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$F{amount}]]></textFieldExpression>
+            </textField>
+
+            <!-- Prix unitaire -->
+            <textField isBlankWhenNull="true" pattern="#,##0.00 €">
+                <reportElement x="350" y="0" width="88" height="35" forecolor="#6B7280" uuid="d1000007-0000-0000-0000-000000000007"/>
+                <textElement textAlignment="Right" verticalAlignment="Middle">
+                    <font size="10"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$F{unit_price}]]></textFieldExpression>
+            </textField>
+
+            <!-- Total ligne -->
+            <textField isBlankWhenNull="true" pattern="#,##0.00 €">
+                <reportElement x="438" y="0" width="117" height="35" forecolor="#1F3A5F" uuid="d1000008-0000-0000-0000-000000000008"/>
+                <textElement textAlignment="Right" verticalAlignment="Middle">
+                    <font size="11" isBold="true"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$F{line_total}]]></textFieldExpression>
+            </textField>
+        </band>
+    </detail>
+
+    <!-- 6. COLUMN FOOTER (vide) -->
+    <columnFooter>
+        <band height="15" splitType="Stretch"/>
+    </columnFooter>
+
+    <!-- 7. PAGE FOOTER -->
+    <pageFooter>
+        <band height="40" splitType="Stretch">
+            <!-- Ligne de séparation -->
+            <line>
+                <reportElement x="0" y="5" width="555" height="1" forecolor="#E5E7EB" uuid="e1000001-0000-0000-0000-000000000001"/>
+                <graphicElement>
+                    <pen lineWidth="1.0"/>
+                </graphicElement>
+            </line>
+
+            <!-- Date de génération -->
+            <textField>
+                <reportElement x="0" y="12" width="300" height="15" forecolor="#9CA3AF" uuid="e1000002-0000-0000-0000-000000000002"/>
+                <textElement verticalAlignment="Middle">
+                    <font size="8"/>
+                </textElement>
+                <textFieldExpression><![CDATA["Document généré le " + new java.text.SimpleDateFormat("dd/MM/yyyy à HH:mm").format(new java.util.Date())]]></textFieldExpression>
+            </textField>
+
+            <!-- Numéro de page -->
+            <textField>
+                <reportElement x="425" y="12" width="130" height="15" forecolor="#9CA3AF" uuid="e1000003-0000-0000-0000-000000000003"/>
+                <textElement textAlignment="Right" verticalAlignment="Middle">
+                    <font size="8"/>
+                </textElement>
+                <textFieldExpression><![CDATA["Page " + $V{PAGE_NUMBER}]]></textFieldExpression>
+            </textField>
+
+            <!-- Ligne inférieure -->
+            <line>
+                <reportElement x="0" y="35" width="555" height="1" forecolor="#F3F4F6" uuid="e1000004-0000-0000-0000-000000000004"/>
+                <graphicElement>
+                    <pen lineWidth="1.0"/>
+                </graphicElement>
+            </line>
+        </band>
+    </pageFooter>
+
+    <!-- 8. SUMMARY (Total) -->
+    <summary>
+        <band height="160" splitType="Stretch">
+            <!-- Ligne de séparation premium -->
+            <line>
+                <reportElement x="0" y="10" width="555" height="2" forecolor="#1F3A5F" uuid="f1000000-0000-0000-0000-000000000000"/>
+                <graphicElement>
+                    <pen lineWidth="2.0"/>
+                </graphicElement>
+            </line>
+
+            <!-- Contenant principal du total -->
+            <rectangle>
+                <reportElement x="300" y="30" width="255" height="100" backcolor="#FFFFFF" uuid="f1000001-0000-0000-0000-000000000001"/>
+                <graphicElement>
+                    <pen lineWidth="2.0" lineColor="#1F3A5F"/>
+                </graphicElement>
+            </rectangle>
+
+            <!-- Barre latérale accent -->
+            <rectangle>
+                <reportElement x="300" y="30" width="6" height="100" backcolor="#1F3A5F" uuid="f1000002-0000-0000-0000-000000000002"/>
+                <graphicElement>
+                    <pen lineWidth="0.0"/>
+                </graphicElement>
+            </rectangle>
+
+            <!-- TOTAL HT - Section -->
+            <rectangle>
+                <reportElement x="300" y="30" width="255" height="40" backcolor="#F9FAFB" uuid="f1000003-0000-0000-0000-000000000003"/>
+                <graphicElement>
+                    <pen lineWidth="0.0"/>
+                </graphicElement>
+            </rectangle>
+
+            <staticText>
+                <reportElement x="315" y="30" width="150" height="18" forecolor="#6B7280" uuid="f1000004-0000-0000-0000-000000000004"/>
+                <textElement verticalAlignment="Top">
+                    <font size="9" isBold="true"/>
+                </textElement>
+                <text><![CDATA[TOTAL HT]]></text>
+            </staticText>
+
+            <textField isBlankWhenNull="true" pattern="#,##0.00 €">
+                <reportElement x="315" y="47" width="230" height="18" forecolor="#6B7280" uuid="f1000005-0000-0000-0000-000000000005"/>
+                <textElement textAlignment="Right" verticalAlignment="Bottom">
+                    <font size="11"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$P{totalAmount}]]></textFieldExpression>
+            </textField>
+
+            <!-- Ligne de séparation interne -->
+            <line>
+                <reportElement x="315" y="70" width="230" height="1" forecolor="#E5E7EB" uuid="f1000006-0000-0000-0000-000000000006"/>
+                <graphicElement>
+                    <pen lineWidth="1.0"/>
+                </graphicElement>
+            </line>
+
+            <!-- TOTAL TTC - Section Premium -->
+            <rectangle>
+                <reportElement x="300" y="71" width="255" height="59" backcolor="#1F3A5F" uuid="f1000007-0000-0000-0000-000000000007"/>
+                <graphicElement>
+                    <pen lineWidth="0.0"/>
+                </graphicElement>
+            </rectangle>
+
+            <staticText>
+                <reportElement x="315" y="75" width="150" height="18" forecolor="#FFFFFF" uuid="f1000008-0000-0000-0000-000000000008"/>
+                <textElement verticalAlignment="Top">
+                    <font size="10" isBold="true"/>
+                </textElement>
+                <text><![CDATA[TOTAL TTC]]></text>
+            </staticText>
+
+            <textField isBlankWhenNull="true" pattern="#,##0.00 €">
+                <reportElement x="315" y="93" width="230" height="28" forecolor="#FFFFFF" uuid="f1000009-0000-0000-0000-000000000009"/>
+                <textElement textAlignment="Right" verticalAlignment="Bottom">
+                    <font size="20" isBold="true"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$P{totalAmount}]]></textFieldExpression>
+            </textField>
+
+            <!-- Messages informatifs -->
+            <staticText>
+                <reportElement x="0" y="140" width="555" height="15" forecolor="#9CA3AF" uuid="f1000010-0000-0000-0000-000000000010"/>
+                <textElement textAlignment="Center" verticalAlignment="Middle">
+                    <font size="9" isItalic="true"/>
+                </textElement>
+                <text><![CDATA[Merci pour votre confiance. Pour toute question, n'hésitez pas à nous contacter.]]></text>
+            </staticText>
+        </band>
+    </summary>
+
+</jasperReport>
