@@ -8,6 +8,7 @@ import com.sendgrid.helpers.mail.*;
 
 import com.sendgrid.helpers.mail.objects.Content;
 import com.sendgrid.helpers.mail.objects.Email;
+import org.example.springmanager2.Entity.Enums.ROLES;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -76,9 +77,9 @@ public class GmailEmailService {
     /**
      * Envoyer un email de réinitialisation de mot de passe
      */
-    public void sendPasswordResetEmail(String recipientEmail, String resetToken) throws Exception {
+    public void sendPasswordResetEmail(String recipientEmail, String resetToken , ROLES role) throws Exception {
         String subject = "Réinitialisation de votre mot de passe";
-        String resetLink = "http://localhost:3000/reset-password?pwdToken=" + resetToken+"&email="+recipientEmail;
+        String resetLink = "http://localhost:3000/reset-password?pwdToken=" + resetToken+"&pwdRole="+role+"&email="+recipientEmail;
         String htmlBody = String.format("""
             <html>
                 <body style="font-family: Arial, sans-serif; background-color: #f5f5f5; padding: 20px;">
@@ -89,7 +90,7 @@ public class GmailEmailService {
                         <div style="text-align: center; margin: 30px 0;">
                             <a href="%s" style="background-color: #007bff; color: white; padding: 12px 30px; text-decoration: none; border-radius: 5px; font-weight: bold; display: inline-block;">Réinitialiser mon mot de passe</a>
                         </div>
-                        <p style="color: #999; font-size: 14px;">Ce lien expire dans 1 heure.</p>
+                        <p style="color: #999; font-size: 14px;">Ce lien expire dans 10-12 minutes.</p>
                         <p style="color: #999; font-size: 14px;">Si vous n'avez pas demandé cette réinitialisation, ignorez cet email.</p>
                         <hr style="border: none; border-top: 1px solid #eee; margin: 30px 0;">
                         <p style="color: #999; font-size: 14px;">Cordialement,<br/><strong>L'équipe Facturation</strong></p>

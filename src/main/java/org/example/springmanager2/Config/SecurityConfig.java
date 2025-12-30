@@ -45,7 +45,7 @@ public class SecurityConfig {
                                                 "/password/**",
                                                 "/api/email/**"
                                         ).permitAll()
-                        .requestMatchers("/admin/**","produits/delete-product").hasAuthority("ADMIN")
+                        .requestMatchers("/admin/**","/produits/delete-product").hasAuthority("ADMIN")
                         .requestMatchers("/comptable/**").hasAnyAuthority("ADMIN","COMPTABLE")
                         .requestMatchers("/client/**").hasAnyAuthority("ADMIN" ,"CLIENT","COMPTABLE")
                         .requestMatchers("/produits/some","produits/all").hasAnyAuthority("ADMIN" ,"CLIENT","COMPTABLE")

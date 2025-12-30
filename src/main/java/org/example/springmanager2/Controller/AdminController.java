@@ -20,6 +20,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/admin")
 
+
 public class AdminController {
 
     private RolesRouter rolesRouter;
@@ -33,7 +34,7 @@ public class AdminController {
     }
 
 
-    @ModelAttribute
+    @ModelAttribute("currentAdmin")
     public void verifyHeader(@RequestHeader("Authorization") String bearerKey) throws Exception {
         String token;
         if
@@ -78,8 +79,8 @@ public class AdminController {
     }
 
     @PostMapping("/delete-role")
-    public Status delete(@RequestBody String code ,ROLES userRole ) throws Exception {
-
+    public Status delete(@RequestParam String code, String role) throws Exception {
+        ROLES userRole = ROLES.valueOf(role);
         System.out.println("code "+code+" role "+userRole);
         switch (userRole) {
             case ROLES.CLIENT ->rolesRouter.delete(ROLES.CLIENT, code);

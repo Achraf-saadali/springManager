@@ -30,6 +30,7 @@ public class JwtUtil {
                 .compact();
 
     }
+
     public JwtUtil(@Value("${jwt.secret}") String secretKey) {
         SECRET_KEY = secretKey;
         key = Keys.hmacShaKeyFor(SECRET_KEY.getBytes());
@@ -65,12 +66,5 @@ public class JwtUtil {
                 .getExpiration();
         return expiration.after(new Date());
     }
-    public void invalidateToken(String token){
-         Jwts.parserBuilder()
-                .setSigningKey(SECRET_KEY.getBytes())
-                .build()
-                .parseClaimsJws(token)
-                .getBody().setExpiration(new Date());
 
-    }
 }

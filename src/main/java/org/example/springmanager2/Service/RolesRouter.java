@@ -72,15 +72,10 @@ public class RolesRouter
     {
         return  mappedServices.get(role).loadUserByUsername(userEmail);
     }
-    public UserDetails loadByEmail(String userEmail)
+
+    public  List<? extends Personne> loadAll(ROLES role )
     {
-        int i = 0 ;
-        UserDetails P  = null;
-         for(ROLES r : ROLES.values())
-         {    P =  this.load(r,userEmail);
-             if(P != null)  return P ;
-         }
-         return P ;
+        return  mappedServices.get(role).getAll();
     }
 
 

@@ -30,7 +30,18 @@ public class ComptableController {
         this.rolesRouter=rolesRouter;
         this.jwtUtil  = jwtUtil ;
     }
+    @ModelAttribute
+    public void verifyHeader(@RequestHeader("Authorization") String bearerKey) throws Exception
+    {
+        String token ;
+        if (bearerKey == null || ! bearerKey.startsWith("Bearer ") || (token = bearerKey.substring(7)).isBlank() || ! jwtUtil.isTokenValid(token))
+            throw new InvalidTokenException("Authentication required");
 
+        currentComptable = (Comptable) rolesRouter.load(ROLES.COMPTABLE ,jwtUtil.extractUsername(token)) ;
+        System.out.println("VALID TOKEN ");
+
+
+    }
 
 
 
@@ -52,7 +63,8 @@ public class ComptableController {
     }
 
     @PostMapping("/delete-role")
-    public Status delete(@RequestBody String code, ROLES userRole) throws Exception {
+    public Status delete(@RequestParam String code, String role) throws Exception {
+        ROLES userRole = ROLES.valueOf(role);
         System.out.println("code "+code+" role "+userRole);
 
         switch (userRole) {
@@ -73,7 +85,17 @@ public class ComptableController {
     public Status modify(@RequestBody Personne P) throws Exception {
         switch (P) {
             case Client C -> rolesRouter.modify(C.getUserRole(), C);
-            case Comptable C -> rolesRouter.modify(C.getUserRole(), C);
+            case Comptable C -> {
+                if(!currentComptable.getComptableCode().equals( C.getComptableCode()))
+                {
+                    return new Status(403,"Can 't change Antoher Comptable information ");
+                }
+                rolesRouter.modify(ROLES.CLIENT , C);
+                return new Status(200, "Successful modification");
+
+
+            }
+
             default -> throw new RolesException("Action Impossible :Can't modify  this role");
         }
         ;
@@ -110,5 +132,7 @@ public class ComptableController {
 
 
     }
+
+
 
 }

@@ -17,9 +17,9 @@ public class ProduitService {
         this.produitRepo=produitRepo;
     }
 
-    public void create(Produit P)
+    public Produit create(Produit P)
     {
-        produitRepo.save(P);
+        return produitRepo.save(P);
     }
 
     public Produit findById(int id)

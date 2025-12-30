@@ -12,6 +12,8 @@ public class Produit {
     private Integer idProduit ;
 
     private String description ;
+    @Column(name="image_url")
+    private String imageUrl ;
 
     private String name ;
      @Column(name="quantite_stock")

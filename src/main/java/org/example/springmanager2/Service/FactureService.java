@@ -162,139 +162,97 @@ public class FactureService {
         // SAFE XHTML HTML (NO <br>, NO <meta>, NO VOID TAGS)
         String html =
                 "<!DOCTYPE html>" +
-                        "<html xmlns='http://www.w3.org/1999/xhtml' lang='en'>" +
+                        "<html>" +
                         "<head>" +
                         "<meta charset='UTF-8'/>" +
-                        "<meta name='viewport' content='width=device-width, initial-scale=1.0'/>" +
                         "<title>Invoice - " + COMPANY_NAME + "</title>" +
                         "<style>\n" +
-                        "    /* Reset Base */\n" +
-                        "    *, *::before, *::after {\n" +
-                        "      margin: 0;\n" +
-                        "      padding: 0;\n" +
-                        "      box-sizing: border-box;\n" +
-                        "    }\n" +
-                        "\n" +
                         "    body {\n" +
-                        "      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;\n" +
+                        "      font-family: Arial, sans-serif;\n" +
+                        "      margin: 0;\n" +
+                        "      padding: 20pt;\n" +
                         "      background-color: #f8fafc;\n" +
                         "      color: #1e293b;\n" +
-                        "      line-height: 1.6;\n" +
-                        "      padding: 2rem 1rem;\n" +
-                        "      -webkit-font-smoothing: antialiased;\n" +
                         "    }\n" +
                         "\n" +
-                        "    /* Invoice Container */\n" +
                         "    .invoice {\n" +
                         "      max-width: 850px;\n" +
                         "      margin: 0 auto;\n" +
                         "      background: #ffffff;\n" +
-                        "      border-radius: 12px;\n" +
-                        "      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);\n" +
-                        "      overflow: hidden;\n" +
+                        "      border: 1pt solid #e2e8f0;\n" +
                         "    }\n" +
                         "\n" +
-                        "    /* Header */\n" +
+                        "    /* Header - Using TABLE instead of flexbox */\n" +
                         "    .header {\n" +
-                        "      background: linear-gradient(135deg, #1e3a5f 0%, #2d4a6f 100%);\n" +
+                        "      background-color: #1e3a5f;\n" +
                         "      color: #ffffff;\n" +
-                        "      padding: 2.5rem;\n" +
-                        "      display: flex;\n" +
-                        "      justify-content: space-between;\n" +
-                        "      align-items: flex-start;\n" +
+                        "      padding: 25pt;\n" +
                         "    }\n" +
                         "\n" +
-                        "    .brand {\n" +
-                        "      display: flex;\n" +
-                        "      align-items: center;\n" +
-                        "      gap: 1rem;\n" +
-                        "    }\n" +
-                        "\n" +
-                        "    .logo {\n" +
-                        "      width: 64px;\n" +
-                        "      height: 64px;\n" +
-                        "      background: rgba(255, 255, 255, 0.1);\n" +
-                        "      border: 1px solid rgba(255, 255, 255, 0.2);\n" +
-                        "      border-radius: 12px;\n" +
-                        "      display: flex;\n" +
-                        "      align-items: center;\n" +
-                        "      justify-content: center;\n" +
-                        "      font-size: 1.5rem;\n" +
-                        "      font-weight: 700;\n" +
-                        "      letter-spacing: -0.5px;\n" +
+                        "    .header table {\n" +
+                        "      width: 100%;\n" +
+                        "      border-collapse: collapse;\n" +
                         "    }\n" +
                         "\n" +
                         "    .company-name {\n" +
-                        "      font-size: 1.5rem;\n" +
-                        "      font-weight: 600;\n" +
-                        "      letter-spacing: -0.5px;\n" +
+                        "      font-size: 18pt;\n" +
+                        "      font-weight: bold;\n" +
+                        "      margin-bottom: 5pt;\n" +
                         "    }\n" +
                         "\n" +
                         "    .company-tagline {\n" +
-                        "      color: rgba(255, 255, 255, 0.7);\n" +
-                        "      font-size: 0.875rem;\n" +
-                        "      margin-top: 0.25rem;\n" +
-                        "    }\n" +
-                        "\n" +
-                        "    .invoice-details {\n" +
-                        "      text-align: right;\n" +
+                        "      font-size: 10pt;\n" +
+                        "      color: #cbd5e1;\n" +
                         "    }\n" +
                         "\n" +
                         "    .invoice-title {\n" +
-                        "      font-size: 2rem;\n" +
-                        "      font-weight: 300;\n" +
-                        "      letter-spacing: 0.2em;\n" +
-                        "      margin-bottom: 0.75rem;\n" +
+                        "      font-size: 24pt;\n" +
+                        "      font-weight: normal;\n" +
+                        "      margin-bottom: 10pt;\n" +
+                        "      text-align: right;\n" +
                         "    }\n" +
                         "\n" +
                         "    .invoice-meta {\n" +
-                        "      font-size: 0.875rem;\n" +
-                        "      line-height: 1.8;\n" +
+                        "      font-size: 10pt;\n" +
+                        "      text-align: right;\n" +
+                        "      line-height: 1.6;\n" +
                         "    }\n" +
                         "\n" +
-                        "    .invoice-meta span {\n" +
-                        "      color: rgba(255, 255, 255, 0.5);\n" +
-                        "    }\n" +
-                        "\n" +
-                        "    /* Billing Section */\n" +
+                        "    /* Billing Section - Using TABLE */\n" +
                         "    .billing-section {\n" +
-                        "      display: grid;\n" +
-                        "      grid-template-columns: 1fr 1fr;\n" +
-                        "      gap: 2rem;\n" +
-                        "      padding: 2rem 2.5rem;\n" +
-                        "      border-bottom: 1px solid #f1f5f9;\n" +
+                        "      padding: 20pt 25pt;\n" +
+                        "      border-bottom: 1pt solid #f1f5f9;\n" +
+                        "    }\n" +
+                        "\n" +
+                        "    .billing-section table {\n" +
+                        "      width: 100%;\n" +
+                        "      border-collapse: collapse;\n" +
                         "    }\n" +
                         "\n" +
                         "    .billing-block h3 {\n" +
-                        "      font-size: 0.75rem;\n" +
-                        "      font-weight: 600;\n" +
-                        "      color: rgba(30, 58, 95, 0.5);\n" +
+                        "      font-size: 9pt;\n" +
+                        "      font-weight: bold;\n" +
+                        "      color: #64748b;\n" +
                         "      text-transform: uppercase;\n" +
-                        "      letter-spacing: 0.1em;\n" +
-                        "      margin-bottom: 0.75rem;\n" +
+                        "      margin-bottom: 10pt;\n" +
                         "    }\n" +
                         "\n" +
                         "    .billing-block .name {\n" +
-                        "      font-size: 1.125rem;\n" +
-                        "      font-weight: 600;\n" +
+                        "      font-size: 13pt;\n" +
+                        "      font-weight: bold;\n" +
                         "      color: #1e3a5f;\n" +
-                        "      margin-bottom: 0.25rem;\n" +
-                        "    }\n" +
-                        "\n" +
-                        "    .billing-block .company {\n" +
-                        "      color: #475569;\n" +
-                        "      margin-bottom: 0.25rem;\n" +
+                        "      margin-bottom: 5pt;\n" +
                         "    }\n" +
                         "\n" +
                         "    .billing-block .address {\n" +
-                        "      font-size: 0.875rem;\n" +
+                        "      font-size: 10pt;\n" +
                         "      color: #64748b;\n" +
                         "      line-height: 1.6;\n" +
                         "    }\n" +
                         "\n" +
                         "    /* Products Table */\n" +
                         "    .products-section {\n" +
-                        "      padding: 2rem 2.5rem;\n" +
+                        "      padding: 20pt 25pt;\n" +
                         "    }\n" +
                         "\n" +
                         "    .products-table {\n" +
@@ -303,25 +261,16 @@ public class FactureService {
                         "    }\n" +
                         "\n" +
                         "    .products-table thead tr {\n" +
-                        "      background: #1e3a5f;\n" +
+                        "      background-color: #1e3a5f;\n" +
                         "      color: #ffffff;\n" +
                         "    }\n" +
                         "\n" +
                         "    .products-table th {\n" +
-                        "      padding: 1rem 1.25rem;\n" +
-                        "      font-size: 0.75rem;\n" +
-                        "      font-weight: 600;\n" +
+                        "      padding: 10pt 12pt;\n" +
+                        "      font-size: 9pt;\n" +
+                        "      font-weight: bold;\n" +
                         "      text-transform: uppercase;\n" +
-                        "      letter-spacing: 0.05em;\n" +
                         "      text-align: left;\n" +
-                        "    }\n" +
-                        "\n" +
-                        "    .products-table th:first-child {\n" +
-                        "      border-radius: 8px 0 0 8px;\n" +
-                        "    }\n" +
-                        "\n" +
-                        "    .products-table th:last-child {\n" +
-                        "      border-radius: 0 8px 8px 0;\n" +
                         "    }\n" +
                         "\n" +
                         "    .products-table th.text-center {\n" +
@@ -333,23 +282,19 @@ public class FactureService {
                         "    }\n" +
                         "\n" +
                         "    .products-table td {\n" +
-                        "      padding: 1.25rem;\n" +
-                        "      border-bottom: 1px solid #f1f5f9;\n" +
-                        "    }\n" +
-                        "\n" +
-                        "    .products-table tbody tr:hover {\n" +
-                        "      background-color: rgba(248, 250, 252, 0.5);\n" +
+                        "      padding: 12pt;\n" +
+                        "      border-bottom: 1pt solid #f1f5f9;\n" +
                         "    }\n" +
                         "\n" +
                         "    .product-name {\n" +
-                        "      font-weight: 500;\n" +
+                        "      font-weight: bold;\n" +
                         "      color: #1e3a5f;\n" +
                         "    }\n" +
                         "\n" +
                         "    .product-desc {\n" +
-                        "      font-size: 0.875rem;\n" +
+                        "      font-size: 10pt;\n" +
                         "      color: #64748b;\n" +
-                        "      margin-top: 0.25rem;\n" +
+                        "      margin-top: 3pt;\n" +
                         "    }\n" +
                         "\n" +
                         "    .products-table td.text-center {\n" +
@@ -363,181 +308,96 @@ public class FactureService {
                         "    }\n" +
                         "\n" +
                         "    .products-table td.total {\n" +
-                        "      font-weight: 500;\n" +
+                        "      font-weight: bold;\n" +
                         "      color: #1e3a5f;\n" +
                         "    }\n" +
                         "\n" +
-                        "    /* Summary Section */\n" +
+                        "    /* Summary Section - Using TABLE */\n" +
                         "    .summary-section {\n" +
-                        "      display: grid;\n" +
-                        "      grid-template-columns: 1fr 1fr;\n" +
-                        "      gap: 2rem;\n" +
-                        "      padding: 2rem 2.5rem;\n" +
-                        "      background: linear-gradient(180deg, #f8fafc 0%, #ffffff 100%);\n" +
+                        "      padding: 20pt 25pt;\n" +
+                        "      background-color: #f8fafc;\n" +
                         "    }\n" +
                         "\n" +
-                        "    /* QR Code */\n" +
-                        "    .qr-section {\n" +
-                        "      display: flex;\n" +
-                        "      align-items: center;\n" +
-                        "      gap: 1.5rem;\n" +
+                        "    .summary-section table {\n" +
+                        "      width: 100%;\n" +
+                        "      border-collapse: collapse;\n" +
                         "    }\n" +
                         "\n" +
                         "    .qr-code {\n" +
-                        "      width: 110px;\n" +
-                        "      height: 110px;\n" +
-                        "      background: #ffffff;\n" +
-                        "      border-radius: 12px;\n" +
-                        "      border: 1px solid #e2e8f0;\n" +
-                        "      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);\n" +
-                        "      display: flex;\n" +
-                        "      align-items: center;\n" +
-                        "      justify-content: center;\n" +
-                        "      padding: 0.75rem;\n" +
+                        "      width: 110pt;\n" +
+                        "      height: 110pt;\n" +
+                        "      background-color: #e2e8f0;\n" +
+                        "      text-align: center;\n" +
+                        "      vertical-align: middle;\n" +
+                        "      border: 1pt solid #cbd5e1;\n" +
                         "    }\n" +
                         "\n" +
-                        "    .qr-placeholder {\n" +
-                        "      width: 100%;\n" +
-                        "      height: 100%;\n" +
-                        "      background: rgba(30, 58, 95, 0.05);\n" +
-                        "      border-radius: 8px;\n" +
-                        "      display: flex;\n" +
-                        "      align-items: center;\n" +
-                        "      justify-content: center;\n" +
-                        "    }\n" +
-                        "\n" +
-                        "    .qr-placeholder svg {\n" +
-                        "      width: 60px;\n" +
-                        "      height: 60px;\n" +
-                        "      color: #1e3a5f;\n" +
+                        "    .qr-text {\n" +
+                        "      padding-left: 15pt;\n" +
                         "    }\n" +
                         "\n" +
                         "    .qr-text h4 {\n" +
-                        "      font-weight: 600;\n" +
+                        "      font-weight: bold;\n" +
                         "      color: #1e3a5f;\n" +
-                        "      margin-bottom: 0.25rem;\n" +
+                        "      margin: 0 0 5pt 0;\n" +
                         "    }\n" +
                         "\n" +
                         "    .qr-text p {\n" +
-                        "      font-size: 0.875rem;\n" +
+                        "      font-size: 10pt;\n" +
                         "      color: #64748b;\n" +
-                        "      line-height: 1.5;\n" +
+                        "      margin: 0;\n" +
                         "    }\n" +
                         "\n" +
-                        "    /* Totals */\n" +
                         "    .totals {\n" +
-                        "      display: flex;\n" +
-                        "      flex-direction: column;\n" +
-                        "      gap: 0.75rem;\n" +
+                        "      text-align: right;\n" +
+                        "      vertical-align: top;\n" +
                         "    }\n" +
                         "\n" +
                         "    .totals-row {\n" +
-                        "      display: flex;\n" +
-                        "      justify-content: space-between;\n" +
+                        "      margin-bottom: 8pt;\n" +
                         "      color: #475569;\n" +
                         "    }\n" +
                         "\n" +
                         "    .totals-row .value {\n" +
-                        "      font-weight: 500;\n" +
+                        "      font-weight: bold;\n" +
+                        "      padding-left: 20pt;\n" +
                         "    }\n" +
                         "\n" +
                         "    .totals-divider {\n" +
-                        "      border-top: 1px solid #e2e8f0;\n" +
-                        "      margin: 0.5rem 0;\n" +
+                        "      border-top: 1pt solid #e2e8f0;\n" +
+                        "      margin: 10pt 0;\n" +
                         "    }\n" +
                         "\n" +
                         "    .totals-total {\n" +
-                        "      display: flex;\n" +
-                        "      justify-content: space-between;\n" +
-                        "      align-items: center;\n" +
-                        "    }\n" +
-                        "\n" +
-                        "    .totals-total .label {\n" +
-                        "      font-size: 1.125rem;\n" +
-                        "      font-weight: 600;\n" +
+                        "      font-size: 16pt;\n" +
+                        "      font-weight: bold;\n" +
                         "      color: #1e3a5f;\n" +
-                        "    }\n" +
-                        "\n" +
-                        "    .totals-total .value {\n" +
-                        "      font-size: 1.5rem;\n" +
-                        "      font-weight: 700;\n" +
-                        "      color: #1e3a5f;\n" +
+                        "      margin-top: 10pt;\n" +
                         "    }\n" +
                         "\n" +
                         "    /* Footer */\n" +
                         "    .footer {\n" +
-                        "      padding: 2rem 2.5rem;\n" +
-                        "      border-top: 1px solid #f1f5f9;\n" +
+                        "      padding: 20pt 25pt;\n" +
+                        "      border-top: 1pt solid #f1f5f9;\n" +
                         "      text-align: center;\n" +
                         "    }\n" +
                         "\n" +
                         "    .footer-message {\n" +
-                        "      font-size: 1.125rem;\n" +
-                        "      font-weight: 500;\n" +
+                        "      font-size: 13pt;\n" +
+                        "      font-weight: bold;\n" +
                         "      color: #1e3a5f;\n" +
-                        "      margin-bottom: 0.25rem;\n" +
+                        "      margin-bottom: 5pt;\n" +
                         "    }\n" +
                         "\n" +
                         "    .footer-note {\n" +
-                        "      font-size: 0.875rem;\n" +
+                        "      font-size: 10pt;\n" +
                         "      color: #64748b;\n" +
-                        "      margin-bottom: 1.5rem;\n" +
+                        "      margin-bottom: 15pt;\n" +
                         "    }\n" +
                         "\n" +
                         "    .footer-contact {\n" +
-                        "      display: flex;\n" +
-                        "      justify-content: center;\n" +
-                        "      gap: 2rem;\n" +
-                        "      flex-wrap: wrap;\n" +
-                        "    }\n" +
-                        "\n" +
-                        "    .contact-item {\n" +
-                        "      display: flex;\n" +
-                        "      align-items: center;\n" +
-                        "      gap: 0.5rem;\n" +
-                        "      font-size: 0.875rem;\n" +
+                        "      font-size: 10pt;\n" +
                         "      color: #64748b;\n" +
-                        "    }\n" +
-                        "\n" +
-                        "    .contact-item svg {\n" +
-                        "      width: 16px;\n" +
-                        "      height: 16px;\n" +
-                        "      color: rgba(30, 58, 95, 0.6);\n" +
-                        "    }\n" +
-                        "\n" +
-                        "    /* Print Styles */\n" +
-                        "    @media print {\n" +
-                        "      body {\n" +
-                        "        background: #ffffff;\n" +
-                        "        padding: 0;\n" +
-                        "      }\n" +
-                        "\n" +
-                        "      .invoice {\n" +
-                        "        box-shadow: none;\n" +
-                        "        border-radius: 0;\n" +
-                        "      }\n" +
-                        "    }\n" +
-                        "\n" +
-                        "    /* Responsive */\n" +
-                        "    @media (max-width: 640px) {\n" +
-                        "      .header {\n" +
-                        "        flex-direction: column;\n" +
-                        "        gap: 1.5rem;\n" +
-                        "      }\n" +
-                        "\n" +
-                        "      .invoice-details {\n" +
-                        "        text-align: left;\n" +
-                        "      }\n" +
-                        "\n" +
-                        "      .billing-section,\n" +
-                        "      .summary-section {\n" +
-                        "        grid-template-columns: 1fr;\n" +
-                        "      }\n" +
-                        "\n" +
-                        "      .footer-contact {\n" +
-                        "        flex-direction: column;\n" +
-                        "        gap: 0.75rem;\n" +
-                        "      }\n" +
                         "    }\n" +
                         "  </style>" +
                         "</head>" +
@@ -545,39 +405,50 @@ public class FactureService {
 
                         "<div class='invoice'>" +
 
-                        "<header class='header'>" +
-                        "<div class='brand'>" +
-                        "<div class='logo'>AC</div>" +
-                        "<div>" +
+                        "<!-- Header using table -->" +
+                        "<div class='header'>" +
+                        "<table>" +
+                        "<tr>" +
+                        "<td style='width: 50%; vertical-align: top;'>" +
                         "<div class='company-name'>" + COMPANY_NAME + "</div>" +
                         "<div class='company-tagline'>Premium E-Commerce Solutions</div>" +
-                        "</div>" +
-                        "</div>" +
-                        "<div class='invoice-details'>" +
-                        "<h1 class='invoice-title'>INVOICE</h1>" +
+                        "</td>" +
+                        "<td style='width: 50%; vertical-align: top;'>" +
+                        "<div class='invoice-title'>INVOICE</div>" +
                         "<div class='invoice-meta'>" +
-                        "<div><span>Invoice No:</span> FAC-" + facture.getIdFacture() + "</div>" +
-                        "<div><span>Date:</span> " + new SimpleDateFormat("dd/MM/yyyy").format(facture.getCreatedAt()) + "</div>" +
-                        "<div><span>Due Date:</span> TBD</div>" + // optional: calculate due date dynamically
+                        "<div>Invoice No: FAC-" + facture.getIdFacture() + "</div>" +
+                        "<div>Date: " + new SimpleDateFormat("dd/MM/yyyy").format(facture.getCreatedAt()) + "</div>" +
+                        "<div>Due Date: TBD</div>" +
                         "</div>" +
+                        "</td>" +
+                        "</tr>" +
+                        "</table>" +
                         "</div>" +
-                        "</header>" +
 
-                        "<section class='billing-section'>" +
+                        "<!-- Billing Section using table -->" +
+                        "<div class='billing-section'>" +
+                        "<table>" +
+                        "<tr>" +
+                        "<td style='width: 50%; vertical-align: top;'>" +
                         "<div class='billing-block'>" +
                         "<h3>Bill To</h3>" +
                         "<div class='name'>" + facture.getCode() + "</div>" +
                         "<div class='address'>" + "Gare Ain sebaa Casablanca".replace("\n","<br/>") + "</div>" +
-                        "</div>" + // close first billing-block
-
+                        "</div>" +
+                        "</td>" +
+                        "<td style='width: 50%; vertical-align: top;'>" +
                         "<div class='billing-block'>" +
                         "<h3>Ship To</h3>" +
                         "<div class='name'>" + facture.getCode() + "</div>" +
-                        "<div class='company'>" + COMPANY_NAME + "</div>" +
-                        "</div>" + // <-- CLOSED the second billing-block
-                        "</section>" +
+                        "<div class='address'>" + COMPANY_NAME + "</div>" +
+                        "</div>" +
+                        "</td>" +
+                        "</tr>" +
+                        "</table>" +
+                        "</div>" +
 
-                        "<section class='products-section'>" +
+                        "<!-- Products Table -->" +
+                        "<div class='products-section'>" +
                         "<table class='products-table'>" +
                         "<thead>" +
                         "<tr>" +
@@ -588,37 +459,45 @@ public class FactureService {
                         "</tr>" +
                         "</thead>" +
                         "<tbody>" +
-                        rows + // your dynamically generated rows from facture.getProduitCommandes()
+                        rows +
                         "</tbody>" +
                         "</table>" +
-                        "</section>" +
-
-                        "<section class='summary-section'>" +
-                        "<div class='qr-section'>" +
-                        "<div class='qr-code'>" +
-                        "<div class='qr-placeholder'>QR CODE SVG OR PLACEHOLDER</div>" +
                         "</div>" +
-                        "<div class='qr-text'>" +
+
+                        "<!-- Summary Section using table -->" +
+                        "<div class='summary-section'>" +
+                        "<table>" +
+                        "<tr>" +
+                        "<td style='width: 50%; vertical-align: top;'>" +
+                        "<table>" +
+                        "<tr>" +
+                        "<td class='qr-code'>QR</td>" +
+                        "<td class='qr-text'>" +
                         "<h4>Scan to Pay</h4>" +
                         "<p>Scan this QR code with your<br/>banking app for instant payment</p>" +
-                        "</div>" +
-                        "</div>" +
-
+                        "</td>" +
+                        "</tr>" +
+                        "</table>" +
+                        "</td>" +
+                        "<td style='width: 50%; vertical-align: top;'>" +
                         "<div class='totals'>" +
-                        "<div class='totals-row'><span>Tax</span><span class='value'>" + "1.2%" + "</span></div>" +
+                        "<div class='totals-row'>Tax: <span class='value'>1.2%</span></div>" +
                         "<div class='totals-divider'></div>" +
-                        "<div class='totals-total'><span class='label'>Total Due</span><span class='value'>" + facture.getPrixFacture() + "</span></div>" +
+                        "<div class='totals-total'>Total Due: " + facture.getPrixFacture() + " DH</div>" +
                         "</div>" +
-                        "</section>" +
+                        "</td>" +
+                        "</tr>" +
+                        "</table>" +
+                        "</div>" +
 
-                        "<footer class='footer'>" +
+                        "<!-- Footer -->" +
+                        "<div class='footer'>" +
                         "<div class='footer-message'>Thank you for your business!</div>" +
                         "<div class='footer-note'>Payment is due within 14 days of invoice date.</div>" +
                         "<div class='footer-contact'>" +
-                        "<div class='contact-item'>Email: " + COMPANY_EMAIL + "</div>" +
-                        "<div class='contact-item'>Phone: " + COMPANY_PHONE + "</div>" +
+                        "Email: " + COMPANY_EMAIL + " | Phone: " + COMPANY_PHONE +
                         "</div>" +
-                        "</footer>" +
+                        "</div>" +
 
                         "</div>" +
                         "</body></html>";

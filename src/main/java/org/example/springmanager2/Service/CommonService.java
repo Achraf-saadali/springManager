@@ -22,22 +22,22 @@ public interface CommonService  extends UserDetailsService
         public Authentication authentication(Authentication auth)
                 throws AuthenticationException;
 
-        default  List<String> checkCredentialsExchange(Personne person1 , Personne person2)
-        {      if (person1 == null) throw new IllegalArgumentException("person1 cannot be null");
-
-            if (person2 == null) {
-                return List.of(person1.getUsername(), person1.getUserName(), person1.getUserPassword());
-            }
-
-            String userEmail = (person2.getUsername() == null || person2.getUsername().isBlank())
-                    ? person1.getUsername() : person2.getUsername();
-            String userName = (person2.getUserName() == null || person2.getUserName().isBlank())
-                    ? person1.getUserName() : person2.getUserName();
-            String userPassword = (person2.getUserPassword() == null || person2.getUserPassword().isBlank())
-                    ? person1.getUserPassword() : person2.getUserPassword();
-
-            return List.of(userEmail, userName, userPassword);
-        }
+//        default  List<String> checkCredentialsExchange(Personne person1 , Personne person2)
+//        {      if (person1 == null) throw new IllegalArgumentException("person1 cannot be null");
+//
+//            if (person2 == null) {
+//                return List.of(person1.getUsername(), person1.getUserName(), person1.getUserPassword());
+//            }
+//
+//            String userEmail = (person2.getUsername() == null || person2.getUsername().isBlank())
+//                    ? person1.getUsername() : person2.getUsername();
+//            String userName = (person2.getUserName() == null || person2.getUserName().isBlank())
+//                    ? person1.getUserName() : person2.getUserName();
+//            String userPassword = (person2.getUserPassword() == null || person2.getUserPassword().isBlank())
+//                    ? person1.getUserPassword() : person2.getUserPassword();
+//
+//            return List.of(userEmail, userName, userPassword);
+//        }
 
 
 

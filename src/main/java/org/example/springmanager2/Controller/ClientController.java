@@ -16,6 +16,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/client")
+@SessionAttributes("currentUser")
 public class ClientController {
     private RolesRouter rolesRouter;
     private JwtUtil jwtUtil ;
@@ -27,17 +28,31 @@ public class ClientController {
     }
 
 
-    @ModelAttribute
-    public void verifyHeader(@RequestHeader("Authorization") String bearerKey) throws Exception
-    {
-        String token ;
-        if (bearerKey == null || ! bearerKey.startsWith("Bearer ") || (token = bearerKey.substring(7)).isBlank() || ! jwtUtil.isTokenValid(token))
+    @ModelAttribute("currentUser")
+    public Object verifyHeader(@RequestHeader("Authorization") String bearerKey) throws Exception {
+        if (bearerKey == null || !bearerKey.startsWith("Bearer ")) {
             throw new InvalidTokenException("Authentication required");
+        }
+        //{status : 401 , 200 ,345   message : ex.toString}
 
-        currentClient = (Client) rolesRouter.load(ROLES.CLIENT ,jwtUtil.extractUsername(token)) ;
-        System.out.println("VALID TOKEN ");
+        String token = bearerKey.substring(7).trim();
+        if (token.isBlank() || !jwtUtil.isTokenValid(token)) {
+            throw new InvalidTokenException("Authentication required");
+        }
 
+        // Vérifier le rôle et charger l’utilisateur correspondant
+        Object currentUser = null;
+        ROLES role = jwtUtil.extractRole(token);
+        if (role == ROLES.ADMIN) {
+            currentUser = rolesRouter.load(ROLES.ADMIN, jwtUtil.extractUsername(token));
+        } else if (role == ROLES.ADMIN) {
+            currentUser = rolesRouter.load(ROLES.COMPTABLE, jwtUtil.extractUsername(token));
+        } else {
+            throw new InvalidTokenException("User does not have required role");
+        }
 
+        System.out.println("VALID TOKEN for user: " + currentUser);
+        return currentUser; // Spring stockera automatiquement dans la session sous "currentUser"
     }
 
     @GetMapping("/profile")
@@ -74,5 +89,25 @@ public class ClientController {
                 )
         );
        return rolesRouter.getSome(ROLES.CLIENT,query,pageable);
+    }
+    @PostMapping("/modify-me")
+    public Status modify(@RequestBody Personne P)
+    {
+        switch(P)
+        {
+            case Client C -> {
+                if(!currentClient.getClientCode().equals( C.getClientCode()))
+                {
+                    return new Status(403,"Can 't change Antoher Client information ");
+                }
+                rolesRouter.modify(ROLES.CLIENT , C);
+                return new Status(200, "Successful modification");
+
+
+            }
+            default -> {
+                return new Status(403,"Can't procced !!!");
+            }
+        }
     }
 }

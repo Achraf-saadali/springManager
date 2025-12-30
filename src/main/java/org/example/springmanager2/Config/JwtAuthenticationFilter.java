@@ -38,7 +38,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
 
 
-
     public JwtAuthenticationFilter(JwtUtil jwtUtil,
                                    RolesRouter rolesRouter) {
         System.out.println("JwtAuthenticationFilter" +

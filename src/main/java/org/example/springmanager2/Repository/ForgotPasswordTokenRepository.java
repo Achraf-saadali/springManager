@@ -11,4 +11,5 @@ public interface ForgotPasswordTokenRepository
         extends JpaRepository<ForgotPasswordToken, Integer> {
 
     Optional<ForgotPasswordToken> findByToken(String token);
+    public void deleteByToken(String token);
 }

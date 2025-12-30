@@ -12,6 +12,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 @CrossOrigin("http://localhost:3000")
@@ -38,7 +39,7 @@ public class ProduitController {
             throw new InvalidTokenException("Authentication required");
 
 
-           System.out.println("VALID TOKEN ");
+           System.out.println("VALID TOKEN  from product");
 
 
     }
@@ -73,11 +74,28 @@ public class ProduitController {
         return produit;
     }
     @PostMapping("/delete-product")
-    public Status delete(@RequestParam("idProduit") int idProduit)
-    {
+    public Status delete(@RequestParam("idProduit") String id)
+    {     int idProduit = Integer.valueOf(id);
         produitServive.deleteProduct(idProduit);
 
         return new Status(200 , "Product deletion was successfull");
+    }
+
+    @PostMapping("/create-product")
+    public Status create(
+            @ModelAttribute Produit P
+    ) {
+        System.out.println("Produit reçu === " + P);
+        produitServive.saveProduct(P);
+        return new Status(200, "Product created successfully");
+    }
+    @PostMapping("/modify-product")
+    public Status modify(@ModelAttribute Produit P)
+    {
+        produitServive.saveProduct(P);
+
+        return new Status(200 , "Product modified Successufully");
+
     }
 
 
