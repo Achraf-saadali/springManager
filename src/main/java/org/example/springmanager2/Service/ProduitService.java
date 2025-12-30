@@ -51,5 +51,19 @@ public class ProduitService {
     }
 
 
+    public void deleteProduct(int idProduct)
+    {
+        System.out.println("deleting product by id "+idProduct);
+        produitRepo.deleteById(idProduct);
+    }
+
+    public void saveProduct(Produit p)
+    {
+        produitRepo.save(p);
+    }
+
+
+
+
 
 }

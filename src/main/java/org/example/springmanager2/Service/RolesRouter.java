@@ -75,11 +75,12 @@ public class RolesRouter
     public UserDetails loadByEmail(String userEmail)
     {
         int i = 0 ;
-        UserDetails P ;
+        UserDetails P  = null;
          for(ROLES r : ROLES.values())
          {    P =  this.load(r,userEmail);
              if(P != null)  return P ;
          }
+         return P ;
     }
 
 

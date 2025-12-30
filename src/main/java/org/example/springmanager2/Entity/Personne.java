@@ -66,10 +66,10 @@ public  class Personne  implements UserDetails {
     }
 
     @Override
-    public String getPassword()
+``````````    public String getPassword()
     {
         return userPassword ;
-    }
+    }``````````
 
     @Override
     public boolean isAccountNonExpired()

@@ -9,7 +9,7 @@ import lombok.ToString;
 
 @Entity
 @Data
-
+@ToString(exclude = "facture")
 public class LigneFacture {
 
     @Id

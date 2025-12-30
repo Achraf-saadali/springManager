@@ -18,6 +18,8 @@ import java.util.Map;
 @Data
 
 @Entity
+@ToString(exclude = "produitCommandes")
+
 public class Facture {
 
     @Id

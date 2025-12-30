@@ -59,7 +59,8 @@ public class FactureController {
                         p.getQuantiteCommandes()
                 ))
                 .toList();
-
+        System.out.println("prduitsssssssssss"+lignes);
+        System.out.println("creating.......");
         switch (factureReponse.getTypeFacture()) {
             case CLIENT ->
                     factureService.creerFactureClient(factureReponse.getCode(), lignes);
@@ -68,6 +69,7 @@ public class FactureController {
             default ->
                     throw new RuntimeException("Invalid facture type");
         }
+        System.out.println("created........");
     }
     @GetMapping("/all")
     public List<Facture> getAll(@RequestParam ROLES role) {

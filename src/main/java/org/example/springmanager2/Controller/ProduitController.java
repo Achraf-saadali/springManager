@@ -68,7 +68,16 @@ public class ProduitController {
                 )
         );
 
-        return produitServive.search(query, pageable);
+        Page<Produit> produit = produitServive.search(query, pageable);
+        System.out.println("produit sont...."+produit.stream().toList());
+        return produit;
+    }
+    @PostMapping("/delete-product")
+    public Status delete(@RequestParam("idProduit") int idProduit)
+    {
+        produitServive.deleteProduct(idProduit);
+
+        return new Status(200 , "Product deletion was successfull");
     }
 
 

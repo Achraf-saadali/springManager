@@ -45,12 +45,13 @@ public class SecurityConfig {
                                                 "/password/**",
                                                 "/api/email/**"
                                         ).permitAll()
-                        .requestMatchers("/admin/**").hasAuthority("ADMIN")
+                        .requestMatchers("/admin/**","produits/delete-product").hasAuthority("ADMIN")
                         .requestMatchers("/comptable/**").hasAnyAuthority("ADMIN","COMPTABLE")
                         .requestMatchers("/client/**").hasAnyAuthority("ADMIN" ,"CLIENT","COMPTABLE")
-                        .requestMatchers("/produits/**").hasAnyAuthority("ADMIN" ,"CLIENT","COMPTABLE")
-                        .requestMatchers("/facture/create").hasAnyAuthority("ADMIN","COMPTABLE")
+                        .requestMatchers("/produits/some","produits/all").hasAnyAuthority("ADMIN" ,"CLIENT","COMPTABLE")
+                        .requestMatchers("/factures/create").hasAnyAuthority("ADMIN","COMPTABLE")
                         .requestMatchers("/password/**").permitAll()
+
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);

@@ -19,7 +19,7 @@ public interface CommonRepository<ENTITY,ID> extends JpaRepository<ENTITY,ID> {
 
     public ENTITY findByUserEmail(String userEmail);
     public ENTITY deleteByUserEmail(String userEmail);
-     public Page<ENTITY> findByUserNameLike(String name , Pageable page);
+     public Page<ENTITY> findByUserNameContainingIgnoreCase(String name , Pageable page);
 
     default ROLES supports()
     {

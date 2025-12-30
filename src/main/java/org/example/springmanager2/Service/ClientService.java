@@ -125,7 +125,7 @@ public class ClientService implements CommonService  {
 
     public Page<? extends Personne> getSome(String name , Pageable page)
     {
-        return clientRepo.findByUserNameLike(name,page);
+        return clientRepo.findByUserNameContainingIgnoreCase(name,page);
     }
 
 }

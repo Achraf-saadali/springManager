@@ -136,7 +136,7 @@ public class ComptableService implements CommonService {
 
     public Page<? extends Personne> getSome(String name , Pageable page)
     {
-        return comptableRepo.findByUserNameLike(name, page);
+        return comptableRepo.findByUserNameContainingIgnoreCase(name, page);
     }
 
 }
